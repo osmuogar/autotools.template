@@ -1,0 +1,99 @@
+# README
+
+## Table of contents
+- [Dependencies](#dependencies)
+- [Installation](#installation)
+- [Execution](#execution)
+- [Directories](#directories)
+- [Developing](#developing)
+    - [Finding dependencies](#finding-dependencies)
+    - [Debugging](#debugging)
+- [Distribution](#distribution)
+
+## Dependencies
+* [automake](https://www.gnu.org/software/automake/)-2.57
+* [autoconf](https://www.gnu.org/software/autoconf/)-1.7
+* [libtool](https://www.gnu.org/software/libtool/)-1.4.2
+* [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/)-0.20
+* [libcheck](https://github.com/libcheck/check)-0.15.2
+
+## Installation
+```bash
+autoreconf --install
+./configure
+make
+make check
+make install
+sudo ldconfig
+```
+
+## Execution
+```bash
+make start
+```
+## Directories
+- doc: Project documentation.
+- include: header files.
+- m4: m4 files.
+- src: source files.
+- tests: test files.
+
+## Developing
+### Finding dependencies
+The following program shows all dependencies to be added to configure.ac
+```bash
+autoscan # Used to generate a preliminary configure.ac
+```
+
+### Debugging
+To check for memory leaks you can make use of `make memory-leaks.check`, that
+makes use of [Valgrind](https://www.valgrind.org/) to check for memory leaks.
+
+For general debugging set the
+[configuration](https://stackoverflow.com/a/4680578/8682584) of the project:
+```bash
+./configure CPPFLAGS=-DDEBUG CFLAGS="-g -O0"
+```
+
+[run](https://www.gnu.org/software/libtool/manual/html_node/Debugging-executables.html)
+the debugger:
+```bash
+./libtool --mode=execute gdb src/program
+```
+
+To quickly check for a bug, commands can be written as aguments such as:
+```bash
+./libtool --mode=execute gdb \
+-ex 'break -source instance.c -function instance_rm_request if req_id > 10' \
+-ex 'run' \
+-ex 'info args' \
+-ex 'info locals' \
+-ex 'where' \
+-ex 'list' \
+src/program
+```
+
+> NOTE: Shared libraries are not initially loaded and the breakpoint has to be
+> set as pending before running the program
+
+- 'watch <var>' to watch a variable and be notified about changes.
+- 'step' to change continue until the next instruction.
+- 'fin' to finish the actua function and see the retun value.
+- 'info args/locals' gives information about agurments or locals.
+- 'where' prints stack frames.
+- 'list [start_line,end_line]' shows 10 lines of code centered around the
+    current line.
+- 'run' executes the program, accepting args as space separated values.
+- 'break' sets a breakpoint.
+- 'continue'.
+- 'print <variable>' prints the variable.
+
+> NOTE: To debug a test case uncomment the line
+> `srunner_set_fork_status(sr, CK_NOFORK);` in tests/test.c.
+
+## Distribution
+Generates a tar file ready to distribute.
+
+```bash
+make dist # Generates a tar file ready to distribute
+```
