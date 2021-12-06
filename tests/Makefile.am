@@ -1,5 +1,5 @@
-# Defines programs that test the code
-TESTS = test
+# Defines programs that test the code.
+TESTS = program_test util_test
 
 # Programs listed in check_PROGRAMS (and check_LIBRARIES, check_LTLIBRARIES,
 # ...) are only built during make check, not during make all. You should list
@@ -12,9 +12,18 @@ check_PROGRAMS =
 # Defines programs that must not be installed.
 noinst_PROGRAMS = $(TESTS)
 
-# Defines program sources
-test_SOURCES = test.c
-# Defines CFlags to add to the program
-test_CFLAGS = $(CFLAGS) $(CHECK_CFLAGS) -I $(top_srcdir)/include
-# Defines libraries to be linked to the program
-test_LDADD = $(LDFLAGS) $(CHECK_LIBS) $(top_srcdir)/src/libprogram.la
+# Defines program sources.
+program_test_SOURCES = program_test.c
+# Defines CFlags to add to the program.
+program_test_CFLAGS = $(CFLAGS) $(CMOCKA_CFLAGS) -I $(top_srcdir)/include
+# Defines libraries to be linked to the program.
+program_test_LDADD = $(LDFLAGS) $(CMOCKA_LIBS) $(top_srcdir)/src/libprogram.la
+# Flags passed to the linker program.
+program_test_LDFLAGS = "-Wl,--wrap=sum"
+
+# Defines program sources.
+util_test_SOURCES = util_test.c
+# Defines CFlags to add to the program.
+util_test_CFLAGS = $(CFLAGS) $(CMOCKA_CFLAGS) -I $(top_srcdir)/include
+# Defines libraries to be linked to the program.
+util_test_LDADD = $(LDFLAGS) $(CMOCKA_LIBS) $(top_srcdir)/src/libprogram.la

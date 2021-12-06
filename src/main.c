@@ -5,7 +5,7 @@
     `#include "config.h"', and pass the C compiler a `-I.' option
     (or `-I..'; whichever directory contains `config.h').
 */
-#include <config.h> // Autotools configuration
+#include <config.h> // Autotools configuration.
 
 #include <program/common.h>
 #include <program/program.h>
@@ -82,9 +82,9 @@ struct argp argp = {
 
 int main(int argc, char *argv[])
 {
-    struct program_configuration config; // Program configuration
-    int res = 0;                        // Execution result
-    unsigned int i;                     // Index
+    struct program_configuration config; // Program configuration.
+    int res = 0;                        // Execution result.
+    unsigned int i;                     // Index.
 
 #ifdef ENABLE_NS_PRECISION
     printf("Nanosecond precission enabled\n");
@@ -92,9 +92,8 @@ int main(int argc, char *argv[])
     printf("Nanosecond precission non-enabled\n");
 #endif
 
-    // Default values
-    config.version = PACKAGE_VERSION;
-    config.verbose = 0;
+    config.version = PACKAGE_VERSION; // Import version from autotools.
+    config.verbose = 0; // Default value.
 
     if (0 != argp_parse(&argp, argc, argv, ARGP_NO_HELP, NULL, &config))
     {

@@ -23,34 +23,34 @@ AC_CONFIG_SRCDIR([src/program.c])
 dnl Runs many macros required for proper operation of the generated Makefiles.
 dnl -Wall Turn on all categories of warnings.
 dnl -Werror Treat warnings as errors.
-dnl foreign Automake will check for only those things that are absolutely required
-dnl   for proper operation
+dnl foreign Automake will check for only those things that are absolutely
+dnl     required for proper operation.
 dnl subdir-objects If this option is specified, then objects are placed into the
-dnl   subdirectory of the build directory corresponding to the subdirectory of the
-dnl   source file
+dnl     subdirectory of the build directory corresponding to the subdirectory of
+dnl     the source file.
 dnl std-options Make the installcheck rule check that installed scripts and
-dnl   programs support the --help and --version options
+dnl     programs support the --help and --version options.
 AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects std-options])
 
-dnl You must use this macro when you use the archiver in your project, if you want
-dnl support for unusual archivers such as Microsoft lib.
+dnl You must use this macro when you use the archiver in your project, if you
+dnl want support for unusual archivers such as Microsoft lib.
 AM_PROG_AR
 
 dnl Specify dir as the location of additional local Autoconf macros.
 AC_CONFIG_MACRO_DIR([m4])
 
-dnl Ensure that a recent enough version of Libtool is being used
+dnl Ensure that a recent enough version of Libtool is being used.
 LT_PREREQ([2.2])
 dnl This macro adds many new tests to the configure script so that the generated
-dnl libtool script will understand the characteristics of the host
+dnl libtool script will understand the characteristics of the host.
 LT_INIT([dlopen shared])
 
-dnl Do compilation tests using the compiler, preprocessor, and file extensions for
-dnl the specified language. C and Erlang are supported languages.
+dnl Do compilation tests using the compiler, preprocessor, and file extensions
+dnl for the specified language. C and Erlang are supported languages.
 AC_LANG(C)
-AC_PROG_CC dnl Determines a C compiler to use
-AC_PROG_CXX dnl Determines a C++ compiler to use
-AX_COVERAGE dnl Enables code coverage
+AC_PROG_CC dnl Determines a C compiler to use.
+AC_PROG_CXX dnl Determines a C++ compiler to use.
+AX_COVERAGE dnl Enables code coverage.
 dnl If the Make command, $MAKE if set or else `make', predefines $(MAKE), define
 dnl output variable SET_MAKE to be empty. Otherwise, define SET_MAKE to a macro
 dnl definition that sets $(MAKE), such as `MAKE=make'.
@@ -60,35 +60,35 @@ dnl ############################################################################
 dnl Configuration flags.
 dnl ############################################################################
 dnl Adds feature as a configuration flag.
-AC_ARG_ENABLE([NS_PRECISION], dnl feature
-    dnl help-string
-    [AS_HELP_STRING([--enable-ns-precision],[Enables nanosecond precision])],
-    [], dnl action-if-given
-	[] dnl action-if-not-given
+AC_ARG_ENABLE([MY_FEATURE], dnl feature.
+    dnl help-string.
+    [AS_HELP_STRING([--enable-my-feature],[Enables my feature.])],
+    [], dnl action-if-given.
+	[] dnl action-if-not-given.
 )
-dnl Generates a conditional in Makefiles,"yes" with --enable_feature
-AM_CONDITIONAL([ENABLE_NS_PRECISION], [test "x$enable_ns_precision" = "xyes"])
-AM_COND_IF([ENABLE_NS_PRECISION], (
-    AC_DEFINE([ENABLE_NS_PRECISION], [1], [Enables nanosecond precision])))
+dnl Generates a conditional in Makefiles,"yes" with --enable_my_feature.
+AM_CONDITIONAL([ENABLE_MY_FEATURE], [test "x$enable_my_feature" = "xyes"])
+AM_COND_IF([ENABLE_MY_FEATURE], (
+    AC_DEFINE([ENABLE_MY_FEATURE], [1], [Enables my feature.])))
 
 dnl ############################################################################
 dnl Checks for libraries.
 dnl ############################################################################
+dnl This macro figures out how to build C programs using POSIX threads.
+AX_PTHREAD(, [AC_MSG_ERROR([Unable to find library libpthread])])
+dnl Check for libcmocka.
+AC_CHECK_LIB([cmocka], [_run_group_tests], [],
+    [AC_MSG_ERROR([Unable to find library cmocka.])])
 dnl Check if clock_gettime, timer_create, timer_settime, and timer_delete are
-dnl available in lib rt, and if so, add -lrt to LIBS
+dnl available in lib rt, and if so, add -lrt to LIBS.
 AC_CHECK_LIB([rt], [clock_gettime, timer_create, timer_settime, timer_delete],
     [],[AC_MSG_ERROR([Please install the rt library.])])
-dnl This macro figures out how to build C programs using POSIX threads
-AX_PTHREAD(, [AC_MSG_ERROR([Unable to find library libpthread])])
-dnl Check for libcheck
-AC_CHECK_LIB([check], [tcase_fn_start], [],
-    [AC_MSG_ERROR([Unable to find library libcheck.])])
 
 dnl ############################################################################
 dnl Checks for header files.
 dnl ############################################################################
-dnl Checks for multiple headers in the system
-AC_CHECK_HEADERS([stdlib.h])
+dnl Checks for multiple headers in the system.
+AC_CHECK_HEADERS([])
 
 dnl ############################################################################
 dnl Checks for typedefs, structures, and compiler characteristics.
@@ -103,15 +103,14 @@ AC_C_RESTRICT
 dnl ############################################################################
 dnl Checks for library functions.
 dnl ############################################################################
-dnl Search for the following functions
-AC_CHECK_FUNCS([strerror])
-AC_FUNC_MALLOC dnl Required to cross-compile malloc
+dnl Search for the following functions.
+AC_CHECK_FUNCS([])
 
 dnl ############################################################################
 dnl Config files.
 dnl ############################################################################
-dnl Make AC_OUTPUT create each file by copying an input file (by default file.in),
-dnl substituting the output variable values
+dnl Make AC_OUTPUT create each file by copying an input file (by default
+dnl file.in), substituting the output variable values.
 AC_CONFIG_FILES([
     Makefile
     src/Makefile
@@ -120,14 +119,16 @@ AC_CONFIG_FILES([
     tests/Makefile
 ])
 
-AC_OUTPUT dnl Generate config.status and launch it
+AC_OUTPUT dnl Generate config.status and launch it.
 
-if test "x$enable_ns_precision" == "xyes"; then
-  PRECISION="ns"
+dnl Check configuration to print it.
+if test "x$enable_my_feature" == "xyes"; then
+  MY_FEATURE="yes"
   else
-  PRECISION="µs"
+  MY_FEATURE="no"
 fi
 
+dnl Prints selected configuration.
 AC_MSG_NOTICE([
     Host setup:             ${host}
     Install prefix:         ${prefix}
@@ -141,7 +142,5 @@ AC_MSG_NOTICE([
     Built-in manual:        ${user_manual}
     Log level:              ${log_level}
     Code coverage support:  ${COVERAGE_SUPPORT}
-    Precision:              ${PRECISION}
+    My feature:             ${MY_FEATURE}
 ])
-
-  

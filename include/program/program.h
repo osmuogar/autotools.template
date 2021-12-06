@@ -7,7 +7,7 @@
 struct program_configuration
 {
     char *version; // Configuration version.
-    int verbose;   // Marks verbose mode
+    int verbose;   // Marks verbose mode.
 };
 
 /**

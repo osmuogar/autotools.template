@@ -14,13 +14,25 @@
 #include <stdlib.h>
 
 /**
- * Main.
+ * @brief Mail program. Calls a buggy function.
+ * @bug The buggy function sum is used to show the functionality of mocks.
+ *
+ * @param configuration
+ * @return int
  */
 int program(struct program_configuration *configuration)
 {
-  // Retrieve external value for program_configuration
+  int res; // Return value.
+  // Retrieve external value for program_configuration.
   extern struct program_configuration *config;
-  config = configuration; // Assign value
+  config = configuration; // Assign value.
 
-  return EXIT_SUCCESS;
+  res = EXIT_SUCCESS; // If all goes fine.
+
+  if (2.0 != sum(1, 1))
+  {
+    res = EXIT_FAILURE; // Something failed.
+  }
+
+  return res; // Return status.
 }
