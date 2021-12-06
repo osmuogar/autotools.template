@@ -7,6 +7,7 @@
 - [Directories](#directories)
 - [Developing](#developing)
     - [Finding dependencies](#finding-dependencies)
+    - [Code coverage](#code-coverage)
     - [Debugging](#debugging)
 - [Distribution](#distribution)
 
@@ -45,6 +46,12 @@ The following program shows all dependencies to be added to configure.ac
 autoscan # Used to generate a preliminary configure.ac
 ```
 
+### Code coverage
+Generates a folder containing the summary of the code coverage of the project.
+```bash
+make coverage
+```
+
 ### Debugging
 To check for memory leaks you can make use of `make memory-leaks.check`, that
 makes use of [Valgrind](https://www.valgrind.org/) to check for memory leaks.
@@ -64,7 +71,7 @@ the debugger:
 To quickly check for a bug, commands can be written as aguments such as:
 ```bash
 ./libtool --mode=execute gdb \
--ex 'break -source instance.c -function instance_rm_request if req_id > 10' \
+-ex 'break -source file.c -function foo if bar > 10' \
 -ex 'run' \
 -ex 'info args' \
 -ex 'info locals' \

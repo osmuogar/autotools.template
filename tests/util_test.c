@@ -6,22 +6,26 @@
 
 #include <program/util.h>
 
+/**
+ * @brief An example test case.
+ *
+ * @param state
+ */
 static void util_test(void **state)
 {
     (void)state; // unused.
 
-    double actualResult,
-        expectedResult;
+    double actualResult, // Actual test result.
+        expectedResult;  // Expected test result.
 
     expectedResult = 2.0;
     actualResult = sum(1, 1);
-
     assert_int_equal(expectedResult, actualResult);
 }
 
 /**
  * @brief Main test function.
- * 
+ *
  * This test is failing on purpose. The point is to show that, alghough program
  * requires sum, the program test is working fine thanks to the stub, while this
  * test is failing.

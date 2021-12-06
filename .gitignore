@@ -62,7 +62,8 @@ dkms.conf
 /src/.libs/
 
 # Test product files
-/tests/test
+/tests/program_test
+/tests/util_test
 /tests/.libs/
 /tests/*.log
 /tests/*.trs

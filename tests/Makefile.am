@@ -12,18 +12,34 @@ check_PROGRAMS =
 # Defines programs that must not be installed.
 noinst_PROGRAMS = $(TESTS)
 
+# Auto generated check-valgrind rules
+@VALGRIND_CHECK_RULES@
+# Files used to silence errors
+VALGRIND_SUPPRESSIONS_FILES = $(addsuffix .supp, $(TESTS))
+
+# Despite all this automatic inclusion, it is still common to have files to be
+# distributed which are not found by the automatic rules. You should listed
+# these files in the EXTRA_DIST variable. You can mention files in
+# subdirectories in EXTRA_DIST. 
+EXTRA_DIST = $(VALGRIND_SUPPRESSIONS_FILES)
+
+# CFLAGS to be used in test programs.
+TEST_PROGRAM_CFLAGS = $(CFLAGS) $(CMOCKA_CFLAGS) -I $(top_srcdir)/include
+# LDADD to ber used in test programs.
+TEST_PROGRAM_LDADD = $(LDFLAGS) $(CMOCKA_LIBS) $(top_srcdir)/src/libprogram.la
+
 # Defines program sources.
 program_test_SOURCES = program_test.c
 # Defines CFlags to add to the program.
-program_test_CFLAGS = $(CFLAGS) $(CMOCKA_CFLAGS) -I $(top_srcdir)/include
+program_test_CFLAGS = $(TEST_PROGRAM_CFLAGS)
 # Defines libraries to be linked to the program.
-program_test_LDADD = $(LDFLAGS) $(CMOCKA_LIBS) $(top_srcdir)/src/libprogram.la
+program_test_LDADD = $(TEST_PROGRAM_LDADD)
 # Flags passed to the linker program.
 program_test_LDFLAGS = "-Wl,--wrap=sum"
 
 # Defines program sources.
 util_test_SOURCES = util_test.c
 # Defines CFlags to add to the program.
-util_test_CFLAGS = $(CFLAGS) $(CMOCKA_CFLAGS) -I $(top_srcdir)/include
+util_test_CFLAGS = $(TEST_PROGRAM_CFLAGS)
 # Defines libraries to be linked to the program.
-util_test_LDADD = $(LDFLAGS) $(CMOCKA_LIBS) $(top_srcdir)/src/libprogram.la
+util_test_LDADD = $(TEST_PROGRAM_LDADD)

@@ -1,4 +1,4 @@
-# Build rules for measuring coverage
+# Build rules for measuring coverage.
 
 COVERAGE_INFO_FILE = $(top_builddir)/coverage.info
 COVERAGE_REPORT_DIR = $(top_builddir)/coverage
@@ -7,7 +7,7 @@ LCOV = lcov
 GCOV = gcov
 GENHTML = genhtml
 
-# Checks for coverage requirements
+# Checks for coverage requirements.
 .PHONY: coverage-requirement-check
 coverage-requirement-check:
 	@if test ! -e $(GCOV); then \
@@ -23,7 +23,7 @@ coverage-requirement-check:
 coverage: coverage-requirement-check clean-coverage coverage-build coverage-check coverage-report
 	@echo "Please execute 'make clean' before 'make' or 'make check' to remove instrumented object files(compiled with -O0 etc.). Note that 'make clean' also remove coverage data."
 
-# Builds coverage files
+# Builds coverage files.
 .PHONY: coverage-build
 coverage-build: coverage-requirement-check
 	@if test `find $(top_builddir) -name "*.gcno" | wc -l` -eq 0; then \
@@ -39,7 +39,7 @@ coverage-build: coverage-requirement-check
 		LIBS="$(LIBS) $(COVERAGE_LIBS)"
 	@echo "Successfully built libraries with coverage options."
 
-# Runs check
+# Runs check.
 .PHONY: coverage-check
 coverage-check: coverage-requirement-check
 	@echo "Start to run tests with instrumented libraries..."
@@ -50,7 +50,7 @@ coverage-check: coverage-requirement-check
 		LIBS="$(LIBS) $(COVERAGE_LIBS)"
 	@echo "Successfully run tests with instrumented libraries."
 
-# Generates a report
+# Generates a report.
 .PHONY: coverage-report
 coverage-report: coverage-requirement-check
 	@echo "Start to create coverage reports..."
@@ -74,13 +74,13 @@ coverage-report: coverage-requirement-check
 		$(COVERAGE_INFO_FILE)
 	@echo "Successfully created coverage reports into $(COVERAGE_REPORT_DIR) directory."
 
-# Cleans the coverage report
+# Cleans the coverage report.
 .PHONY: clean-coverage-report
 clean-coverage-report:
 	-rm -rf $(COVERAGE_INFO_FILE)
 	-rm -rf $(COVERAGE_REPORT_DIR)
 
-# Cleans all coverage related
+# Cleans all coverage related.
 .PHONY: clean-coverage
 clean-coverage: clean-coverage-report
 	-$(LCOV) --gcov-tool $(GCOV) --zerocounters --directory $(top_builddir)
@@ -90,5 +90,5 @@ clean-coverage: clean-coverage-report
 		find $(top_builddir) -name "*.gcno" | xargs rm; \
 	fi
 
-# Creates a hook for clean-local
+# Creates a hook for clean-local.
 clean-local: clean-coverage

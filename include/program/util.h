@@ -4,7 +4,7 @@
 /**
  * @brief Sums two nums.
  * @bug There is an intentional bug used to show mock usability.
- * 
+ *
  * @param a Number to sum.
  * @param b Number to sum.
  * @return double Sum of number a and b.

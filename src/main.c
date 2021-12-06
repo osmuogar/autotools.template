@@ -71,6 +71,7 @@ static error_t my_arg_parser(int key, char *arg, struct argp_state *state)
     return 0;
 }
 
+// Parse options.
 struct argp argp = {
     .options = options,
     .parser = my_arg_parser,
@@ -80,29 +81,40 @@ struct argp argp = {
     .help_filter = NULL,
     .argp_domain = NULL};
 
+/**
+ * @brief Generates a command for this repository.
+ *
+ * @param argc Num of arguments.
+ * @param argv Vector of arguments.
+ * @return int Return state.
+ */
 int main(int argc, char *argv[])
 {
     struct program_configuration config; // Program configuration.
-    int res = 0;                        // Execution result.
-    unsigned int i;                     // Index.
+    int res = 0;                         // Execution result.
+    unsigned int i;                      // Index.
 
-#ifdef ENABLE_NS_PRECISION
-    printf("Nanosecond precission enabled\n");
+// Enable/Disable my feature.
+#ifdef ENABLE_MY_FEATURE
+    printf("My feature enabled.\n");
 #else
-    printf("Nanosecond precission non-enabled\n");
+    printf("My feature non-enabled.\n");
 #endif
 
     config.version = PACKAGE_VERSION; // Import version from autotools.
-    config.verbose = 0; // Default value.
+    config.verbose = 0;               // Default value.
 
+    // Parses arguments.
     if (0 != argp_parse(&argp, argc, argv, ARGP_NO_HELP, NULL, &config))
     {
         fprintf(stderr, "Error parsing arguments: %s\n", strerror(errno));
     }
 
+    // Executes main program.
     if (0 != (res = program(&config)))
     {
-        fprintf(stderr, "Error executing %s: %s\n", PACKAGE_NAME, strerror(errno));
+        fprintf(stderr, "Error executing %s: %s\n", PACKAGE_NAME,
+                strerror(errno));
     }
 
     return res;

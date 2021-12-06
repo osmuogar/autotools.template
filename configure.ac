@@ -22,7 +22,6 @@ AC_CONFIG_SRCDIR([src/program.c])
 
 dnl Runs many macros required for proper operation of the generated Makefiles.
 dnl -Wall Turn on all categories of warnings.
-dnl -Werror Treat warnings as errors.
 dnl foreign Automake will check for only those things that are absolutely
 dnl     required for proper operation.
 dnl subdir-objects If this option is specified, then objects are placed into the
@@ -30,7 +29,7 @@ dnl     subdirectory of the build directory corresponding to the subdirectory of
 dnl     the source file.
 dnl std-options Make the installcheck rule check that installed scripts and
 dnl     programs support the --help and --version options.
-AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects std-options])
+AM_INIT_AUTOMAKE([-Wall foreign subdir-objects std-options])
 
 dnl You must use this macro when you use the archiver in your project, if you
 dnl want support for unusual archivers such as Microsoft lib.
@@ -51,6 +50,7 @@ AC_LANG(C)
 AC_PROG_CC dnl Determines a C compiler to use.
 AC_PROG_CXX dnl Determines a C++ compiler to use.
 AX_COVERAGE dnl Enables code coverage.
+AX_VALGRIND_CHECK dnl Automatically generates rules to run valgrind in tests.
 dnl If the Make command, $MAKE if set or else `make', predefines $(MAKE), define
 dnl output variable SET_MAKE to be empty. Otherwise, define SET_MAKE to a macro
 dnl definition that sets $(MAKE), such as `MAKE=make'.
