@@ -34,16 +34,26 @@ function confirm_project_name(){
     esac
 }
 
+# Replace common file project name.
+# @param file.
 function replace_project_name_in_file(){
     sed -i 's/program/'${PROJECT_NAME}'/g' $1;
     sed -i 's/Program/'${PROJECT_NAME^}'/g' $1;
     sed -i 's/PROGRAM/'${PROJECT_NAME^^}'/g' $1;
 }
 
+# Replace project name in tests/Makefile.am.
+# @param file.
 function handle_test_makefile(){
     sed -i 's/program_test/'${PROJECT_NAME}'_test/g' $1;
     sed -i 's/TEST_PROGRAM/TEST_'${PROJECT_NAME}'/g' $1;
     sed -i 's/libprogram/lib'${PROJECT_NAME}'/g' $1;
+}
+
+# Replace mail.
+# @param file.
+function replace_mail(){
+    sed -i 's/user@mail.com/'${MAIL}'/g' $2;
 }
 
 # Check if name is given as argument.
@@ -55,6 +65,10 @@ else
     # All arguments are setted as project name.
     PROJECT_NAME=$@;
 fi;
+
+# Request project author mail.
+echo -en "\e[32m>\e[0m Introduce the mail of the author: ";
+read MAIL;
 
 # Clean user input.
 clean_input PROJECT_NAME; # Passing reference of variable.
@@ -87,6 +101,8 @@ replace_project_name_in_file configure.ac;
 replace_project_name_in_file Makefile.am;
 replace_project_name_in_file README;
 replace_project_name_in_file TODO;
+
+replace_mail configure.ac;
 
 mv include/program/program.h include/program/${PROJECT_NAME}.h
 mv include/program include/${PROJECT_NAME}
