@@ -8,7 +8,7 @@ ACLOCAL_AMFLAGS=-I m4
 # Enables code coverage.
 include Makefile.coverage.am
 
-# Starts program.
+# Starts my_program.
 .PHONY: start
 start: all
 	time ./src/${PACKAGE_NAME} $(ARGS)
@@ -23,7 +23,7 @@ start-verbose: all
 start-dev: all
 	./libtool --mode=execute ./src/${PACKAGE_NAME} --verbose
 
-# Extends check to search for memory leaks in program.
+# Extends check to search for memory leaks in my_program.
 .PHONY: start-valgrind
 start-valgrind: all
 	./libtool --mode=execute \

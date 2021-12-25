@@ -7,17 +7,17 @@
 */
 #include <config.h> // Autotools configuration.
 
-#include <program/common.h>
-#include <program/program.h>
+#include <my_program/common.h>
+#include <my_program/my_program.h>
 
 #include <argp.h>
 #include <string.h>
 #include <stdlib.h>
 
-const char *argp_program_version = PACKAGE_STRING;
-const char *argp_program_bug_address = PACKAGE_BUGREPORT;
-static char doc[] = "Program description";
-static char args_doc[] = "Program arguments";
+const char *argp_my_program_version = PACKAGE_STRING;
+const char *argp_my_program_bug_address = PACKAGE_BUGREPORT;
+static char doc[] = "my_program description";
+static char args_doc[] = "my_program arguments";
 static struct argp_option options[] = {
     {0, 0, 0, 0, " ", 2},
     {"verbose", 'v', 0, 0, "Verbose mode.", 2},
@@ -31,7 +31,7 @@ static struct argp_option options[] = {
 
 static error_t my_arg_parser(int key, char *arg, struct argp_state *state)
 {
-    struct program_configuration *arguments = state->input;
+    struct my_program_configuration *arguments = state->input;
     switch (key)
     {
     case 'v':
@@ -41,7 +41,7 @@ static error_t my_arg_parser(int key, char *arg, struct argp_state *state)
         arguments->verbose = 0;
         break;
     case 'V':
-        fprintf(stdout, "%s\n", argp_program_version);
+        fprintf(stdout, "%s\n", argp_my_program_version);
         exit(0);
     case 'u':
         argp_state_help(state, stderr, ARGP_HELP_USAGE);
@@ -90,7 +90,7 @@ struct argp argp = {
  */
 int main(int argc, char *argv[])
 {
-    struct program_configuration config; // Program configuration.
+    struct my_program_configuration config; // my_program configuration.
     int res = 0;                         // Execution result.
     unsigned int i;                      // Index.
 
@@ -107,13 +107,13 @@ int main(int argc, char *argv[])
     // Parses arguments.
     if (0 != argp_parse(&argp, argc, argv, ARGP_NO_HELP, NULL, &config))
     {
-        fprintf(stderr, "Error parsing arguments: %s\n", strerror(errno));
+        fprintf(stderr, "Error parsing arguments: %s.\n", strerror(errno));
     }
 
-    // Executes main program.
-    if (0 != (res = program(&config)))
+    // Executes main my_program.
+    if (0 != (res = my_program(&config)))
     {
-        fprintf(stderr, "Error executing %s: %s\n", PACKAGE_NAME,
+        fprintf(stderr, "Error executing %s: %s.\n", PACKAGE_NAME,
                 strerror(errno));
     }
 

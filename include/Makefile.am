@@ -1,2 +1,2 @@
 # Subdirectories to be included.
-SUBDIRS = program
+SUBDIRS = my_program

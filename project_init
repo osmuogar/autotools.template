@@ -6,7 +6,7 @@ function clean_input(){
     local -n ref=$1; # Obtain the value of the pointed variable.
 
     text=${ref}; # Obtain the value of the referenced variable
-    text=${text//_/}; # Strip underscores.
+    #text=${text//_/}; # Strip underscores.
     text=${text// /_}; # Replace spaces with underscores.
     # Clean out anything that's not alphanumeric or an underscore.
     text=${text//[^a-zA-Z0-9_]/};
@@ -19,7 +19,10 @@ function clean_input(){
 
 # Confirms project name.
 function confirm_project_name(){
-    echo -en "\e[32m>\e[0m Is \"$1\" correct? \e[2m(y/N)\e[0m ";
+    echo -e "\e[32m>\e[0m Project configuration is:"
+    echo -e "\e[32m>\e[0m \tProject name: "${PROJECT_NAME}
+    echo -e "\e[32m>\e[0m \tDeveloper mail: "${MAIL}
+    echo -en "\e[32m>\e[0m Is it correct? \e[2m(y/N)\e[0m ";
     read bool;
     bool=${bool:-No};
     case "$bool" in
@@ -37,81 +40,81 @@ function confirm_project_name(){
 # Replace common file project name.
 # @param file.
 function replace_project_name_in_file(){
-    sed -i 's/program/'${PROJECT_NAME}'/g' $1;
-    sed -i 's/Program/'${PROJECT_NAME^}'/g' $1;
-    sed -i 's/PROGRAM/'${PROJECT_NAME^^}'/g' $1;
+    sed -i 's/my_program/'${PROJECT_NAME}'/g' $1;
+    sed -i 's/My_program/'${PROJECT_NAME^}'/g' $1;
+    sed -i 's/MY_PROGRAM/'${PROJECT_NAME^^}'/g' $1;
 }
 
-# Replace project name in tests/Makefile.am.
+# Replace project name in Makefile.am.
 # @param file.
-function handle_test_makefile(){
-    sed -i 's/program_test/'${PROJECT_NAME}'_test/g' $1;
-    sed -i 's/TEST_PROGRAM/TEST_'${PROJECT_NAME}'/g' $1;
-    sed -i 's/libprogram/lib'${PROJECT_NAME}'/g' $1;
+function handle_makefile(){
+    sed -i 's/my_program/'${PROJECT_NAME}'/g' $1;
+    sed -i 's/TEST_MY_PROGRAM/TEST_'${PROJECT_NAME}'/g' $1;
+    sed -i 's/libmy_program/lib'${PROJECT_NAME}'/g' $1;
 }
 
 # Replace mail.
 # @param file.
 function replace_mail(){
-    sed -i 's/user@mail.com/'${MAIL}'/g' $2;
+    sed -i 's/user@mail.com/'${MAIL}'/g' $1;
 }
 
 # Check if name is given as argument.
 if [ "$1" == "" ] ; then
     # Request project name.
     echo -en "\e[32m>\e[0m Introduce the name of the project: ";
-    read PROJECT_NAME;
+    read PROJECT_NAME; # Read from input.
+
+    # Request project author mail.
+    echo -en "\e[32m>\e[0m Introduce the mail of the author: ";
+    read MAIL; # Read from input.
 else
-    # All arguments are setted as project name.
-    PROJECT_NAME=$@;
+    PROJECT_NAME=${@:1:$#-1}; # Set arguments as project name.
+    MAIL=${@:$#}; # Set mail.
 fi;
 
-# Request project author mail.
-echo -en "\e[32m>\e[0m Introduce the mail of the author: ";
-read MAIL;
-
-# Clean user input.
-clean_input PROJECT_NAME; # Passing reference of variable.
+clean_input PROJECT_NAME; # Clean user input. Passing var as reference.
 
 # Confirm project name.
 confirm_project_name ${PROJECT_NAME};
 
 echo -e "\e[32m>\e[0m Initializing project "${PROJECT_NAME}".";
 
-replace_project_name_in_file include/program/program.h;
-replace_project_name_in_file include/program/common.h;
-replace_project_name_in_file include/program/util.h;
-replace_project_name_in_file include/program/Makefile.am;
-replace_project_name_in_file include/Makefile.am;
+# Handle makefiles.
+handle_makefile include/my_program/Makefile.am;
+handle_makefile include/Makefile.am;
+handle_makefile src/Makefile.am;
+handle_makefile tests/Makefile.am;
+handle_makefile Makefile.am;
 
+# Handle common files.
+replace_project_name_in_file include/my_program/my_program.h;
+replace_project_name_in_file include/my_program/common.h;
+replace_project_name_in_file include/my_program/util.h;
 replace_project_name_in_file src/common.c;
 replace_project_name_in_file src/main.c;
-replace_project_name_in_file src/Makefile.am;
-replace_project_name_in_file src/program.c;
+replace_project_name_in_file src/my_program.c;
 replace_project_name_in_file src/util.c;
-
-handle_test_makefile tests/Makefile.am;
-replace_project_name_in_file tests/program_test.c;
-replace_project_name_in_file tests/program_test.supp;
+replace_project_name_in_file tests/my_program_test.c;
+replace_project_name_in_file tests/my_program_test.supp;
 replace_project_name_in_file tests/util_test.c;
 replace_project_name_in_file tests/util_test.supp;
-
 replace_project_name_in_file .gitignore;
 replace_project_name_in_file configure.ac;
-replace_project_name_in_file Makefile.am;
 replace_project_name_in_file README;
 replace_project_name_in_file TODO;
 
+# Replace mail.
 replace_mail configure.ac;
 
-mv include/program/program.h include/program/${PROJECT_NAME}.h
-mv include/program include/${PROJECT_NAME}
-
-mv src/program.c src/${PROJECT_NAME}.c
-
-mv tests/program_test.c tests/${PROJECT_NAME}_test.c
-mv tests/program_test.supp tests/${PROJECT_NAME}_test.supp
+# Rename files and folders.
+mv include/my_program/my_program.h include/my_program/${PROJECT_NAME}.h
+mv include/my_program include/${PROJECT_NAME}
+mv src/my_program.c src/${PROJECT_NAME}.c
+mv tests/my_program_test.c tests/${PROJECT_NAME}_test.c
+mv tests/my_program_test.supp tests/${PROJECT_NAME}_test.supp
 
 echo -e "\e[32m>\e[0m Finished project initialization.";
 
-rm project_init
+rm -r .git; # Remove git.
+rm project_init; # Remove self.

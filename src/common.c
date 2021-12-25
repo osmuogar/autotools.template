@@ -7,6 +7,6 @@
 */
 #include <config.h>
 
-#include <program/common.h>
+#include <my_program/common.h>
 
-struct program_configuration *config;
+struct my_program_configuration *config;

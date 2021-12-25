@@ -3,19 +3,19 @@ AM_CFLAGS = @CFLAGS@ @PTHREAD_CFLAGS@ -I $(top_srcdir)/include
 AM_CC = @PTHREAD_CC@
 
 # Defines a library top be installed under /usr/local/lib/ directory.
-lib_LTLIBRARIES = libprogram.la
+lib_LTLIBRARIES = libmy_program.la
 # Defines sources to be used in the library.
-libprogram_la_SOURCES = \
+libmy_program_la_SOURCES = \
     common.c \
-    program.c \
+    my_program.c \
     util.c
 
 # Libraries to be linked to the library.
-libprogram_la_LIBADD = $(LIBSUBUNIT_LIBS)
+libmy_program_la_LIBADD = $(LIBSUBUNIT_LIBS)
 
-# Defines programs to be installed under the /usr/local/bin/ directory.
-bin_PROGRAMS = program
-# Program sources.
-program_SOURCES = main.c
-# Libraries to be linked to program.
-program_LDADD = libprogram.la
+# Defines my_programs to be installed under the /usr/local/bin/ directory.
+bin_PROGRAMS = my_program
+# my_program sources.
+my_program_SOURCES = main.c
+# Libraries to be linked to my_program.
+my_program_LDADD = libmy_program.la

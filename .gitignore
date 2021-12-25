@@ -58,11 +58,11 @@ Mkfile.old
 dkms.conf
 
 # Src product files
-/src/program
+/src/my_program
 /src/.libs/
 
 # Test product files
-/tests/program_test
+/tests/my_program_test
 /tests/util_test
 /tests/.libs/
 /tests/*.log

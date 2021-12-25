@@ -7,6 +7,8 @@
 */
 #include <config.h>
 
+#include <errno.h>
+
 /**
  * @brief Sums two nums.
  * @bug There is an intentional bug used to show mock usability.
@@ -17,5 +19,10 @@
  */
 double sum(double a, double b)
 {
-    return a + b + 1;
+    if (a < 0 || b < 0)
+    {
+        errno = EINVAL;
+    }
+
+    return a + b;
 }

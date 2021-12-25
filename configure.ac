@@ -4,7 +4,7 @@ dnl `autoscan` to find dependencies to be added to this file.
 
 dnl Process any command-line arguments and perform various initializations and
 dnl verifications.
-AC_INIT([program],[0.1.0],[user@mail.com])
+AC_INIT([my_program],[0.1.0],[user@mail.com])
 
 dnl Make AC_OUTPUT create the file(s) in the blank-or-newline-separated list
 dnl header containing C preprocessor #define statements, and replace ‘@DEFS@’ in
@@ -18,7 +18,7 @@ dnl Configure scripts will have a comment with the version of this file.
 AC_REVISION([$Revision: 0.1.0$])
 
 dnl This checks if the script is running in the appropiate directory.
-AC_CONFIG_SRCDIR([src/program.c])
+AC_CONFIG_SRCDIR([src/my_program.c])
 
 dnl Runs many macros required for proper operation of the generated Makefiles.
 dnl -Wall Turn on all categories of warnings.
@@ -28,7 +28,7 @@ dnl subdir-objects If this option is specified, then objects are placed into the
 dnl     subdirectory of the build directory corresponding to the subdirectory of
 dnl     the source file.
 dnl std-options Make the installcheck rule check that installed scripts and
-dnl     programs support the --help and --version options.
+dnl     progrms support the --help and --version options.
 AM_INIT_AUTOMAKE([-Wall foreign subdir-objects std-options])
 
 dnl You must use this macro when you use the archiver in your project, if you
@@ -115,7 +115,7 @@ AC_CONFIG_FILES([
     Makefile
     src/Makefile
     include/Makefile
-    include/program/Makefile
+    include/my_program/Makefile
     tests/Makefile
 ])
 
@@ -137,8 +137,8 @@ AC_MSG_NOTICE([
     CPPFLAGS:               ${CPPFLAGS}
     LDFLAGS:                ${LDFLAGS}
     LIBS:                   ${LIBS}
-    program version:        ${VERSION}
-    Build program:          Shared=${enable_shared}, Static=${enable_static}
+    my_program version:        ${VERSION}
+    Build my_program:          Shared=${enable_shared}, Static=${enable_static}
     Built-in manual:        ${user_manual}
     Log level:              ${log_level}
     Code coverage support:  ${COVERAGE_SUPPORT}

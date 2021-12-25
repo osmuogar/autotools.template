@@ -1,8 +1,8 @@
 # Headers included in the package.
 pkginclude_HEADERS = \
-    program.h \
+    my_program.h \
     common.h \
     util.h
 
 # Directory where to place include files.
-pkgincludedir= $(includedir)/program
+pkgincludedir= $(includedir)/my_program

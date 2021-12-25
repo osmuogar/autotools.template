@@ -1,5 +1,5 @@
-#ifndef __PROGRAM_UTIL__
-#define __PROGRAM_UTIL__
+#ifndef __MY_PROGRAM_UTIL__
+#define __MY_PROGRAM_UTIL__
 
 /**
  * @brief Sums two nums.

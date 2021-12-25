@@ -4,7 +4,7 @@
 #include <setjmp.h>
 #include <cmocka.h>
 
-#include <program/util.h>
+#include <my_program/util.h>
 
 /**
  * @brief An example test case.
@@ -18,16 +18,16 @@ static void util_test(void **state)
     double actualResult, // Actual test result.
         expectedResult;  // Expected test result.
 
-    expectedResult = 2.0;
-    actualResult = sum(1, 1);
+    expectedResult = 0.0;
+    actualResult = sum(-1, 1);
     assert_int_equal(expectedResult, actualResult);
 }
 
 /**
  * @brief Main test function.
  *
- * This test is failing on purpose. The point is to show that, alghough program
- * requires sum, program test is working fine thanks to the stub, while this
+ * This test is failing on purpose. The point is to show that, alghough my_program
+ * requires sum, my_program test is working fine thanks to the stub, while this
  * test is failing.
  *
  * @return int Number of failed tests.

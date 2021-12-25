@@ -6,10 +6,10 @@
 
 #include <stdio.h>
 
-#include "../src/program.c"
+#include "../src/my_program.c"
 
-extern struct program_configuration *config;
-extern int program(struct program_configuration *configuration);
+extern struct my_program_configuration *config;
+extern int my_program(struct my_program_configuration *configuration);
 
 /**
  * @brief Wrapper of sum function. Requires to import the wrapped function
@@ -32,7 +32,7 @@ double __wrap_sum(const double a, double b)
  *
  * @param state
  */
-static void program_test(void **state)
+static void my_program_test(void **state)
 {
     (void)state; // unused.
 
@@ -44,7 +44,7 @@ static void program_test(void **state)
     will_return(__wrap_sum, 2);     // Mock return value.
 
     expectedResult = EXIT_SUCCESS;
-    actualResult = program(NULL); // In this case, config is not required.
+    actualResult = my_program(NULL); // In this case, config is not required.
 
     assert_int_equal(expectedResult, actualResult);
 }
@@ -59,6 +59,6 @@ static void program_test(void **state)
  */
 int main(void)
 {
-    const struct CMUnitTest tests[] = {cmocka_unit_test(program_test)};
+    const struct CMUnitTest tests[] = {cmocka_unit_test(my_program_test)};
     return cmocka_run_group_tests(tests, NULL, NULL);
 }
