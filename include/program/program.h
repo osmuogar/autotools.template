@@ -11,7 +11,7 @@ struct program_configuration
 };
 
 /**
- * @brief Executes the program.
+ * @brief Executes program.
  *
  * @param configuration Program configurtion.
  * @return int: Returns 0 on success and any other number on failure.

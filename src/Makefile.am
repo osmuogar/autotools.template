@@ -17,5 +17,5 @@ libprogram_la_LIBADD = $(LIBSUBUNIT_LIBS)
 bin_PROGRAMS = program
 # Program sources.
 program_SOURCES = main.c
-# Libraries to be linked to the program.
+# Libraries to be linked to program.
 program_LDADD = libprogram.la

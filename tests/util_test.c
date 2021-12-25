@@ -27,7 +27,7 @@ static void util_test(void **state)
  * @brief Main test function.
  *
  * This test is failing on purpose. The point is to show that, alghough program
- * requires sum, the program test is working fine thanks to the stub, while this
+ * requires sum, program test is working fine thanks to the stub, while this
  * test is failing.
  *
  * @return int Number of failed tests.

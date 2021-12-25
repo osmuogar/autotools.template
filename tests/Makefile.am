@@ -30,9 +30,9 @@ TEST_PROGRAM_LDADD = $(LDFLAGS) $(CMOCKA_LIBS) $(top_srcdir)/src/libprogram.la
 
 # Defines program sources.
 program_test_SOURCES = program_test.c
-# Defines CFlags to add to the program.
+# Defines CFlags to add to program.
 program_test_CFLAGS = $(TEST_PROGRAM_CFLAGS)
-# Defines libraries to be linked to the program.
+# Defines libraries to be linked to program.
 program_test_LDADD = $(TEST_PROGRAM_LDADD)
 # Flags passed to the linker program.
 program_test_LDFLAGS = "-Wl,--wrap=sum"
@@ -41,5 +41,5 @@ program_test_LDFLAGS = "-Wl,--wrap=sum"
 util_test_SOURCES = util_test.c
 # Defines CFlags to add to the program.
 util_test_CFLAGS = $(TEST_PROGRAM_CFLAGS)
-# Defines libraries to be linked to the program.
+# Defines libraries to be linked to program.
 util_test_LDADD = $(TEST_PROGRAM_LDADD)

@@ -1,4 +1,4 @@
-# README
+# PROGRAM
 
 ## Table of contents
 - [Dependencies](#dependencies)
@@ -41,7 +41,7 @@ make start
 
 ## Developing
 ### Finding dependencies
-The following program shows all dependencies to be added to configure.ac
+The following instruction shows all dependencies to be added to configure.ac
 ```bash
 autoscan # Used to generate a preliminary configure.ac
 ```
@@ -81,7 +81,7 @@ src/program
 ```
 
 > NOTE: Shared libraries are not initially loaded and the breakpoint has to be
-> set as pending before running the program
+> set as pending before running program
 
 - 'watch <var>' to watch a variable and be notified about changes.
 - 'step' to change continue until the next instruction.
@@ -90,7 +90,7 @@ src/program
 - 'where' prints stack frames.
 - 'list [start_line,end_line]' shows 10 lines of code centered around the
     current line.
-- 'run' executes the program, accepting args as space separated values.
+- 'run' executes program, accepting args as space separated values.
 - 'break' sets a breakpoint.
 - 'continue'.
 - 'print <variable>' prints the variable.
