@@ -116,5 +116,5 @@ mv tests/my_program_test.supp tests/${PROJECT_NAME}_test.supp
 
 echo -e "\e[32m>\e[0m Finished project initialization.";
 
-rm -r .git; # Remove git.
+rm -rf .git; # Remove git.
 rm project_init; # Remove self.
