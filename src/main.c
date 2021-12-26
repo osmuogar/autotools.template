@@ -116,6 +116,7 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Error parsing arguments: %s.\n", strerror(errno));
     }
 
+    // Set output.
     if (NULL != config.output_path)
     {
         output = fopen(config.output_path, "w");
