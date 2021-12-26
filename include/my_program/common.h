@@ -3,6 +3,9 @@
 
 #include <my_program/my_program.h>
 
+/**
+ * Program output.
+ */
 extern FILE output;
 
 #endif
