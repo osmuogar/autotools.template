@@ -8,6 +8,7 @@ struct my_program_configuration
 {
     char *version; // Configuration version.
     int verbose;   // Marks verbose mode.
+    char *output_path; // Output path.
 };
 
 /**

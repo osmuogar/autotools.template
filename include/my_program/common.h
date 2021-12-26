@@ -3,9 +3,6 @@
 
 #include <my_program/my_program.h>
 
-/**
- * @brief my_program configuration.
- */
-extern struct my_program_configuration *config;
+extern FILE output;
 
 #endif

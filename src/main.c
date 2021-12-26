@@ -16,14 +16,15 @@
 
 const char *argp_my_program_version = PACKAGE_STRING;
 const char *argp_my_program_bug_address = PACKAGE_BUGREPORT;
-static char doc[] = "my_program description";
-static char args_doc[] = "my_program arguments";
+static char doc[] = "my_program description.";
+static char args_doc[] = "my_program arguments.";
 static struct argp_option options[] = {
-    {0, 0, 0, 0, " ", 2},
-    {"verbose", 'v', 0, 0, "Verbose mode.", 2},
-    {"quiet", 'q', 0, 0, "Quiet mode.", 2},
+    {0, 0, 0, 0, "my_program options:", 0},
 
-    {0, 0, 0, 0, " ", -1},
+    {0, 0, 0, 0, "General options:", -1},
+    {"output", 'o', "Output pipe", 0, "Default output.", -1},
+    {"verbose", 'v', 0, 0, "Verbose mode.", -1},
+    {"quiet", 'q', 0, 0, "Quiet mode.", -1},
     {"usage", 'u', 0, 0, "Prints ussage and exits.", -1},
     {"help", 'h', 0, 0, "Prints help and exits.", -1},
     {"version", 'V', 0, 0, "Prints version and exits.", -1},
@@ -34,6 +35,9 @@ static error_t my_arg_parser(int key, char *arg, struct argp_state *state)
     struct my_program_configuration *arguments = state->input;
     switch (key)
     {
+    case 'o':
+        arguments->output_str = arg;
+        break;
     case 'v':
         arguments->verbose = 1;
         break;
@@ -91,8 +95,9 @@ struct argp argp = {
 int main(int argc, char *argv[])
 {
     struct my_program_configuration config; // my_program configuration.
-    int res = 0;                         // Execution result.
-    unsigned int i;                      // Index.
+    int res = 0;                            // Execution result.
+    unsigned int i;                         // Index.
+    extern FILE output;
 
 // Enable/Disable my feature.
 #ifdef ENABLE_MY_FEATURE
@@ -103,6 +108,7 @@ int main(int argc, char *argv[])
 
     config.version = PACKAGE_VERSION; // Import version from autotools.
     config.verbose = 0;               // Default value.
+    config.output_path = NULL;
 
     // Parses arguments.
     if (0 != argp_parse(&argp, argc, argv, ARGP_NO_HELP, NULL, &config))
@@ -110,12 +116,23 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Error parsing arguments: %s.\n", strerror(errno));
     }
 
+    if (NULL != config.output_path)
+    {
+        output = fopen(config.output_path, "w");
+    }
+    else
+    {
+        output = stdout;
+    }
+
     // Executes main my_program.
     if (0 != (res = my_program(&config)))
     {
-        fprintf(stderr, "Error executing %s: %s.\n", PACKAGE_NAME,
+        fprintf(output, "Error executing %s: %s.\n", PACKAGE_NAME,
                 strerror(errno));
     }
+
+    fclose(output);
 
     return res;
 }

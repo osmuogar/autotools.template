@@ -18,14 +18,12 @@
 /**
  * @brief my_program main function.
  *
- * @param configuration
+ * @param config
  * @return int
  */
-int my_program(struct my_program_configuration *configuration)
+int my_program(struct my_program_configuration *config)
 {
-    // Retrieve external value for my_program_configuration.
-    extern struct my_program_configuration *config;
-    config = configuration; // Assign value.
+    extern FILE output; // Where to log.
 
     int res;       // Return value.
     double result; // Function result.
@@ -39,7 +37,11 @@ int my_program(struct my_program_configuration *configuration)
         res = EXIT_FAILURE; // Something failed.
     }
 
-    fprintf(stdout, "The value is %f\n", result);
+    if (config->verbose)
+    {
+
+        fprintf(output, "The value is %f\n", result);
+    }
 
     return res; // Return status.
 }

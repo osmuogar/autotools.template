@@ -9,4 +9,4 @@
 
 #include <my_program/common.h>
 
-struct my_program_configuration *config;
+FILE output;
