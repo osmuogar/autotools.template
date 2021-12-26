@@ -36,7 +36,7 @@ static error_t my_arg_parser(int key, char *arg, struct argp_state *state)
     switch (key)
     {
     case 'o':
-        arguments->output_str = arg;
+        arguments->output_path = arg;
         break;
     case 'v':
         arguments->verbose = 1;
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
     struct my_program_configuration config; // my_program configuration.
     int res = 0;                            // Execution result.
     unsigned int i;                         // Index.
-    extern FILE output;
+    extern FILE *output;
 
 // Enable/Disable my feature.
 #ifdef ENABLE_MY_FEATURE

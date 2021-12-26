@@ -3,9 +3,11 @@
 
 #include <my_program/my_program.h>
 
+#include <stdio.h>
+
 /**
  * Program output.
  */
-extern FILE output;
+extern FILE *output;
 
 #endif

@@ -23,7 +23,7 @@
  */
 int my_program(struct my_program_configuration *config)
 {
-    extern FILE output; // Where to log.
+    extern FILE *output; // Where to log.
 
     int res;       // Return value.
     double result; // Function result.

@@ -9,4 +9,4 @@
 
 #include <my_program/common.h>
 
-FILE output;
+FILE *output;
