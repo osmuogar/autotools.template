@@ -88,7 +88,7 @@ dnl ############################################################################
 dnl Checks for header files.
 dnl ############################################################################
 dnl Checks for multiple headers in the system.
-AC_CHECK_HEADERS([])
+dnl AC_CHECK_HEADERS([])
 
 dnl ############################################################################
 dnl Checks for typedefs, structures, and compiler characteristics.
@@ -104,7 +104,7 @@ dnl ############################################################################
 dnl Checks for library functions.
 dnl ############################################################################
 dnl Search for the following functions.
-AC_CHECK_FUNCS([])
+AC_CHECK_FUNCS([strerror])
 
 dnl ############################################################################
 dnl Config files.

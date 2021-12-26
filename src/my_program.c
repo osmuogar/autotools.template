@@ -16,32 +16,30 @@
 #include <errno.h>
 
 /**
- * @brief Mail my_program. Calls a buggy function.
- * @bug The buggy function sum is used to show the functionality of mocks.
+ * @brief my_program main function.
  *
  * @param configuration
  * @return int
  */
 int my_program(struct my_program_configuration *configuration)
 {
-    int res; // Return value.
-    double result;
     // Retrieve external value for my_program_configuration.
     extern struct my_program_configuration *config;
     config = configuration; // Assign value.
 
+    int res;       // Return value.
+    double result; // Function result.
+
     res = EXIT_SUCCESS; // If all goes fine.
 
-    result = sum(-1, 1);
+    result = sum(-1, 1); // Compute result.
 
     if (0 != errno)
     {
         res = EXIT_FAILURE; // Something failed.
     }
-    else
-    {
-        printf("The value is %f\n", result);
-    }
+
+    fprintf(stdout, "The value is %f\n", result);
 
     return res; // Return status.
 }
