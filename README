@@ -9,14 +9,15 @@
 ################################################################################
 
 1. Dependencies.
-2. Installation.
-3. Execution.
-4. Directories.
-5. Developing.
-    5.1 Finding dependencies.
-    5.2 Code coverage.
-    5.3 Debugging.
-6. Distribution.
+2. Install.
+3. Uninstall.
+4. Execution.
+5. Directories.
+6. Developing.
+    6.1 Finding dependencies.
+    6.2 Code coverage.
+    6.3 Debugging.
+7. Distribution.
 
 ################################################################################
 # 1. Dependencies.
@@ -29,7 +30,7 @@
 * [libcheck](https://github.com/libcheck/check)-0.15.2
 
 ################################################################################
-# 2. Installation.
+# 2. Install.
 ################################################################################
 
 You can install my_program with the following set of instructions:
@@ -44,7 +45,22 @@ sudo ldconfig
 ```
 
 ################################################################################
-# 3. Execution.
+# 3. Uninstall.
+################################################################################
+
+You can install my_program with the following set of instructions:
+
+```bash
+autoreconf --install
+./configure
+make
+make check
+make install
+sudo ldconfig
+```
+
+################################################################################
+# 4. Execution.
 ################################################################################
 
 You can execute my_program with the following set of instructions:
@@ -54,7 +70,7 @@ make start
 ```
 
 ################################################################################
-# 4. Directories.
+# 5. Directories.
 ################################################################################
 
 - doc: Project documentation.
@@ -64,11 +80,11 @@ make start
 - tests: test files.
 
 ################################################################################
-# 5. Developing.
+# 6. Developing.
 ################################################################################
 
 ########################################
-# 5.1 Finding dependencies.
+# 6.1. Finding dependencies.
 ########################################
 
 The following instruction shows all dependencies to be added to configure.ac.
@@ -78,7 +94,7 @@ autoscan # Used to generate a preliminary configure.ac
 ```
 
 ########################################
-# 5.2 Code coverage.
+# 6.2. Code coverage.
 ########################################
 
 Generates a folder containing the summary of the code coverage of the project.
@@ -88,7 +104,7 @@ make coverage
 ```
 
 ########################################
-# 5.3 Debugging.
+# 6.3. Debugging.
 ########################################
 
 To check for memory leaks you can make use of `make memory-leaks.check`, that
@@ -140,7 +156,7 @@ src/my_program
 > `srunner_set_fork_status(sr, CK_NOFORK);` in tests/test.c.
 
 ################################################################################
-# 6. Distribution.
+# 7. Distribution.
 ################################################################################
 
 Generates a tar file ready to distribute.
