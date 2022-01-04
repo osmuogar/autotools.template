@@ -111,8 +111,6 @@ autoscan # Used to generate a preliminary configure.ac
 # 6.2. Code coverage.
 ########################################
 
-Requires package `lcov`.
-
 Generates a folder containing the summary of the code coverage of the project.
 It is recommended to clean project object files with `make clean` before and
 after generating the code coverage report. This is due to the compiler options
@@ -127,8 +125,6 @@ make clean
 ########################################
 # 6.3. Debugging.
 ########################################
-
-Requires packages `gdb` and `valgrind`.
 
 Valgrind (https://www.valgrind.org/) is a took to check for memory leaks and
 other troubles in C. You can enable valgrind win the project with
