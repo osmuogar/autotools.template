@@ -15,7 +15,7 @@ dnl Ensure that a recent enough version of Autoconf is being used.
 AC_PREREQ([2.71])
 
 dnl Configure scripts will have a comment with the version of this file.
-AC_REVISION([$Revision: 0.1.0$])
+AC_REVISION([$Revision: 0.1.1$])
 
 dnl This checks if the script is running in the appropiate directory.
 AC_CONFIG_SRCDIR([src/my_program.c])
@@ -141,6 +141,7 @@ AC_MSG_NOTICE([
     Build my_program:          Shared=${enable_shared}, Static=${enable_static}
     Built-in manual:        ${user_manual}
     Log level:              ${log_level}
+    Valgrind support:       ${enable_valgrind}
     Code coverage support:  ${COVERAGE_SUPPORT}
     My feature:             ${MY_FEATURE}
 ])
