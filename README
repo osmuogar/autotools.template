@@ -24,20 +24,24 @@
 ################################################################################
 
 Developing:
+
 * automake >= 2.57
 * autoconf >= 1.7
 * libtool >= 1.4.2
 * pkg-config >= 0.20
 
 Testing dependencies:
+
 * cmocka >= 1.1.5
 
 Code coverage:
-- lcov >= 1.14
+
+* lcov >= 1.14
 
 Debugging:
-- gdb >= 10.1.90.20210103-git
-- valgrind >= 3.18.1
+
+* gdb >= 10.1.90.20210103-git
+* valgrind >= 3.18.1
 
 ################################################################################
 # 2. Install.
@@ -83,11 +87,11 @@ make start
 # 5. Directories.
 ################################################################################
 
-- doc: Project documentation.
-- include: header files.
-- m4: m4 files.
-- src: source files.
-- tests: test files.
+* doc: Project documentation.
+* include: header files.
+* m4: m4 files.
+* src: source files.
+* tests: test files.
 
 ################################################################################
 # 6. Developing.
@@ -149,17 +153,17 @@ run the debugger
 > NOTE: Shared libraries are not initially loaded and the breakpoint has to be
 > set as pending before running my_program
 
-- 'watch <var>' to watch a variable and be notified about changes.
-- 'step' to change continue until the next instruction.
-- 'fin' to finish the actua function and see the retun value.
-- 'info args/locals' gives information about agurments or locals.
-- 'where' prints stack frames.
-- 'list [start_line,end_line]' shows 10 lines of code centered around the
+* 'watch <var>' to watch a variable and be notified about changes.
+* 'step' to change continue until the next instruction.
+* 'fin' to finish the actua function and see the retun value.
+* 'info args/locals' gives information about agurments or locals.
+* 'where' prints stack frames.
+* 'list [start_line,end_line]' shows 10 lines of code centered around the
     current line.
-- 'run' executes my_program, accepting args as space separated values.
-- 'break' sets a breakpoint.
-- 'continue'.
-- 'print <variable>' prints the variable.
+* 'run' executes my_program, accepting args as space separated values.
+* 'break' sets a breakpoint.
+* 'continue'.
+* 'print <variable>' prints the variable.
 
 > NOTE: To debug a test case uncomment the line
 > `srunner_set_fork_status(sr, CK_NOFORK);` in tests/test.c.
