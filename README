@@ -9,15 +9,16 @@
 ################################################################################
 
 1. Dependencies.
-2. Install.
+2. Installation.
 3. Uninstall.
 4. Execution.
 5. Directories.
 6. Developing.
-    6.1 Finding dependencies.
-    6.2 Code coverage.
-    6.3 Debugging.
-7. Distribution.
+    6.1. Finding dependencies.
+    6.2. Debugging.
+7. Testing.
+    7.1. Code coverage.
+8. Distribution.
 
 ################################################################################
 # 1. Dependencies.
@@ -108,22 +109,7 @@ autoscan # Used to generate a preliminary configure.ac
 ```
 
 ########################################
-# 6.2. Code coverage.
-########################################
-
-Generates a folder containing the summary of the code coverage of the project.
-It is recommended to clean project object files with `make clean` before and
-after generating the code coverage report. This is due to the compiler options
-to optimize code; code coverage requires no optimization.
-
-```bash
-make clean
-make coverage
-make clean
-```
-
-########################################
-# 6.3. Debugging.
+# 6.2. Debugging.
 ########################################
 
 Valgrind (https://www.valgrind.org/) is a took to check for memory leaks and
@@ -178,7 +164,28 @@ src/my_program
 ```
 
 ################################################################################
-# 7. Distribution.
+# 7. Testing.
+################################################################################
+
+Run `make check`.
+
+########################################
+# 7.1. Code coverage.
+########################################
+
+Generates a folder containing the summary of the code coverage of the project.
+It is recommended to clean project object files with `make clean` before and
+after generating the code coverage report. This is due to the compiler options
+to optimize code; code coverage requires no optimization.
+
+```bash
+make clean
+make coverage
+make clean
+```
+
+################################################################################
+# 8. Distribution.
 ################################################################################
 
 Generates a tar file ready to distribute.
