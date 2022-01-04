@@ -23,11 +23,12 @@
 # 1. Dependencies.
 ################################################################################
 
-* [automake](https://www.gnu.org/software/automake/)-2.57
-* [autoconf](https://www.gnu.org/software/autoconf/)-1.7
-* [libtool](https://www.gnu.org/software/libtool/)-1.4.2
-* [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/)-0.20
-* [libcheck](https://github.com/libcheck/check)-0.15.2
+* automake >= 2.57
+* autoconf >= 1.7
+* cmake >= 3.22.1
+* libcheck >= 0.15.2
+* libtool >= 1.4.2
+* pkg-config >= 0.20
 
 ################################################################################
 # 2. Install.
@@ -108,16 +109,17 @@ make coverage
 ########################################
 
 To check for memory leaks you can make use of `make memory-leaks.check`, that
-makes use of [Valgrind](https://www.valgrind.org/) to check for memory leaks.
+makes use of Valgrind(https://www.valgrind.org/) to check for memory leaks.
 
-For general debugging set the
-[configuration](https://stackoverflow.com/a/4680578/8682584) of the project:
+For general debugging set the configuration
+(https://stackoverflow.com/a/4680578/8682584) of the project:
 
 ```bash
 ./configure CPPFLAGS=-DDEBUG CFLAGS="-g -O0"
 ```
 
-[run](https://www.gnu.org/software/libtool/manual/html_node/Debugging-executables.html)
+run
+(https://www.gnu.org/software/libtool/manual/html_node/Debugging-executables.html)
 the debugger:
 
 ```bash
@@ -137,8 +139,8 @@ To quickly check for a bug, commands can be written as aguments such as:
 src/my_program
 ```
 
-> NOTE: Shared libraries are not initially loaded and the breakpoint has to be
-> set as pending before running my_program
+NOTE: Shared libraries are not initially loaded and the breakpoint has to be set
+as pending before running my_program
 
 - 'watch <var>' to watch a variable and be notified about changes.
 - 'step' to change continue until the next instruction.
@@ -151,9 +153,6 @@ src/my_program
 - 'break' sets a breakpoint.
 - 'continue'.
 - 'print <variable>' prints the variable.
-
-> NOTE: To debug a test case uncomment the line
-> `srunner_set_fork_status(sr, CK_NOFORK);` in tests/test.c.
 
 ################################################################################
 # 7. Distribution.
