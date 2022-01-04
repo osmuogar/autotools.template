@@ -131,7 +131,7 @@ make clean
 Requires packages `gdb` and `valgrind`.
 
 Valgrind (https://www.valgrind.org/) is a took to check for memory leaks and
-other troubles in C. You can enable valgrind win the project with 
+other troubles in C. You can enable valgrind win the project with
 `./configure --enable-valgrind`. There are predefined rules to run valgrind in
 execution, i.e., `make start-valgrind` or tests, i.e., `make check-valgrind`.
 Results are outputed in the `tests` folder.
