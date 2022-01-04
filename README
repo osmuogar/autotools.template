@@ -23,12 +23,21 @@
 # 1. Dependencies.
 ################################################################################
 
+Developing:
 * automake >= 2.57
 * autoconf >= 1.7
-* cmake >= 3.22.1
-* libcheck >= 0.15.2
 * libtool >= 1.4.2
 * pkg-config >= 0.20
+
+Testing dependencies:
+* cmocka >= 1.1.5
+
+Code coverage:
+- lcov >= 1.14
+
+Debugging:
+- gdb >= 10.1.90.20210103-git
+- valgrind >= 3.18.1
 
 ################################################################################
 # 2. Install.
@@ -98,33 +107,62 @@ autoscan # Used to generate a preliminary configure.ac
 # 6.2. Code coverage.
 ########################################
 
+Requires package `lcov`.
+
 Generates a folder containing the summary of the code coverage of the project.
+It is recommended to clean project object files with `make clean` before and
+after generating the code coverage report. This is due to the compiler options
+to optimize code; code coverage requires no optimization.
 
 ```bash
+make clean
 make coverage
+make clean
 ```
 
 ########################################
 # 6.3. Debugging.
 ########################################
 
-To check for memory leaks you can make use of `make memory-leaks.check`, that
-makes use of Valgrind(https://www.valgrind.org/) to check for memory leaks.
+Requires packages `gdb` and `valgrind`.
 
-For general debugging set the configuration
-(https://stackoverflow.com/a/4680578/8682584) of the project:
+Valgrind (https://www.valgrind.org/) is a took to check for memory leaks and
+other troubles in C. You can enable valgrind win the project with 
+`./configure --enable-valgrind`. There are predefined rules to run valgrind in
+execution, i.e., `make start-valgrind` or tests, i.e., `make check-valgrind`.
+Results are outputed in the `tests` folder.
+
+For general debugging set the configuration of the project
+(+info: https://stackoverflow.com/a/4680578/8682584):
 
 ```bash
 ./configure CPPFLAGS=-DDEBUG CFLAGS="-g -O0"
 ```
 
-run
-(https://www.gnu.org/software/libtool/manual/html_node/Debugging-executables.html)
-the debugger:
+run the debugger
+(+info: https://www.gnu.org/software/libtool/manual/html_node/Debugging-executables.html):
 
 ```bash
 ./libtool --mode=execute gdb src/my_program
 ```
+
+> NOTE: Shared libraries are not initially loaded and the breakpoint has to be
+> set as pending before running my_program
+
+- 'watch <var>' to watch a variable and be notified about changes.
+- 'step' to change continue until the next instruction.
+- 'fin' to finish the actua function and see the retun value.
+- 'info args/locals' gives information about agurments or locals.
+- 'where' prints stack frames.
+- 'list [start_line,end_line]' shows 10 lines of code centered around the
+    current line.
+- 'run' executes my_program, accepting args as space separated values.
+- 'break' sets a breakpoint.
+- 'continue'.
+- 'print <variable>' prints the variable.
+
+> NOTE: To debug a test case uncomment the line
+> `srunner_set_fork_status(sr, CK_NOFORK);` in tests/test.c.
 
 To quickly check for a bug, commands can be written as aguments such as:
 
@@ -139,21 +177,6 @@ To quickly check for a bug, commands can be written as aguments such as:
 src/my_program
 ```
 
-NOTE: Shared libraries are not initially loaded and the breakpoint has to be set
-as pending before running my_program
-
-- 'watch <var>' to watch a variable and be notified about changes.
-- 'step' to change continue until the next instruction.
-- 'fin' to finish the actua function and see the retun value.
-- 'info args/locals' gives information about agurments or locals.
-- 'where' prints stack frames.
-- 'list [start_line,end_line]' shows 10 lines of code centered around the
-    current line.
-- 'run' executes my_program, accepting args as space separated values.
-- 'break' sets a breakpoint.
-- 'continue'.
-- 'print <variable>' prints the variable.
-
 ################################################################################
 # 7. Distribution.
 ################################################################################
@@ -161,5 +184,6 @@ as pending before running my_program
 Generates a tar file ready to distribute.
 
 ```bash
-make dist # Generates a tar file ready to distribute
+./configure --enable-valgrind=no # Enabled by default.
+make dist
 ```
