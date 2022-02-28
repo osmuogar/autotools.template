@@ -76,13 +76,13 @@ dnl Checks for libraries.
 dnl ############################################################################
 dnl This macro figures out how to build C programs using POSIX threads.
 AX_PTHREAD(, [AC_MSG_ERROR([Unable to find library libpthread])])
+dnl Chefk for math library
+AC_CHECK_LIB([m], [fabs],
+    [],[AC_MSG_ERROR([Unable to locate the math library.])])
 dnl Check for libcmocka.
 AC_CHECK_LIB([cmocka], [_run_group_tests], [],
     [AC_MSG_ERROR([Unable to find library cmocka.])])
-dnl Check if clock_gettime, timer_create, timer_settime, and timer_delete are
-dnl available in lib rt, and if so, add -lrt to LIBS.
-AC_CHECK_LIB([rt], [clock_gettime, timer_create, timer_settime, timer_delete],
-    [],[AC_MSG_ERROR([Please install the rt library.])])
+
 
 dnl ############################################################################
 dnl Checks for header files.
