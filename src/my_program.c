@@ -30,7 +30,7 @@ int my_program(struct my_program_configuration *config)
 
     res = EXIT_SUCCESS; // If all goes fine.
 
-    result = sum(-1, 1); // Compute result.
+    result = sum(1.1111, 1.2222); // Compute result.
 
     if (0 != errno)
     {
@@ -39,8 +39,7 @@ int my_program(struct my_program_configuration *config)
 
     if (config->verbose)
     {
-
-        fprintf(output, "The value is %f\n", result);
+        fprintf(stdout, "The value is %f\n", result);
     }
 
     return res; // Return status.

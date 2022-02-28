@@ -6,10 +6,8 @@
 
 #include <stdio.h>
 
-#include "../src/my_program.c"
-
-extern struct my_program_configuration *config;
-extern int my_program(struct my_program_configuration *configuration);
+#include <my_program/my_program.h>
+#include <my_program/util.h>
 
 /**
  * @brief Wrapper of sum function. Requires to import the wrapped function
@@ -19,10 +17,12 @@ extern int my_program(struct my_program_configuration *configuration);
  * @param b sum b param.
  * @return double sum result.
  */
-double __wrap_sum(const double a, double b)
+double __wrap_sum(double a, double b)
 {
     check_expected(a); // Checks a param is what is expected.
     check_expected(b); // Checks b param is what is expected.
+
+    fprintf(stderr, "Calling the wrap function\n");
 
     return mock_type(double); // Returns the specified double.
 }
@@ -35,16 +35,22 @@ double __wrap_sum(const double a, double b)
 static void my_program_test(void **state)
 {
     (void)state; // unused.
+    
+    struct my_program_configuration config = {
+        .verbose =1
+    };
 
     int actualResult,
         expectedResult;
 
-    expect_value(__wrap_sum, a, 1); // Mock expected a value.
-    expect_value(__wrap_sum, b, 1); // Mock expected b value.
-    will_return(__wrap_sum, 2);     // Mock return value.
+    // WARNING: Decimals are not checked in this function.
+    expect_value(__wrap_sum, a, 1.333333); 
+    // WARNING: Decimals are not checked in this function.
+    expect_value(__wrap_sum, b, 1.999);
+    will_return(__wrap_sum, 2.0); // Mock return value.
 
     expectedResult = EXIT_SUCCESS;
-    actualResult = my_program(NULL); // In this case, config is not required.
+    actualResult = my_program(&config);
 
     assert_int_equal(expectedResult, actualResult);
 }

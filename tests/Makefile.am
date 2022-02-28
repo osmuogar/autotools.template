@@ -29,7 +29,7 @@ TEST_CFLAGS = $(CFLAGS) $(CMOCKA_CFLAGS) -I $(top_srcdir)/include
 TEST_LDADD = $(LDFLAGS) $(CMOCKA_LIBS) $(top_srcdir)/src/libmy_program.la
 
 # Defines my_program sources.
-my_program_test_SOURCES = my_program_test.c
+my_program_test_SOURCES = my_program_test.c ../src/my_program.c ../src/util.c
 # Defines CFlags to add to my_program.
 my_program_test_CFLAGS = $(TEST_CFLAGS)
 # Defines libraries to be linked to my_program.

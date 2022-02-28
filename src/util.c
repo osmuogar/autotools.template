@@ -8,6 +8,7 @@
 #include <config.h>
 
 #include <errno.h>
+#include <stdio.h>
 
 /**
  * @brief Sums two nums.
@@ -19,10 +20,12 @@
  */
 double sum(double a, double b)
 {
+    fprintf(stderr, "Calling the real function\n");
+    errno=0;
     if (a < 0 || b < 0)
     {
         errno = EINVAL;
     }
 
-    return a + b;
+    return a + b + 1.0;
 }
