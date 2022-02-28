@@ -23,8 +23,6 @@ static void sum_test(void **state)
     assert_int_equal(expectedResult, actualResult);
 }
 
-
-
 static void dblcmp_test(void **state)
 {
     (void)state; // unused.
@@ -64,8 +62,6 @@ static void dblcmp_test(void **state)
     assert_int_equal(expectedValue, actualValue);
 }
 
-
-
 /**
  * @brief Main test function.
  *
@@ -80,6 +76,6 @@ int main(void)
     const struct CMUnitTest tests[] = {
         cmocka_unit_test(sum_test),
         cmocka_unit_test(dblcmp_test),
-        };
+    };
     return cmocka_run_group_tests(tests, NULL, NULL);
 }

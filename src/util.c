@@ -15,7 +15,7 @@
 double sum(double a, double b)
 {
     fprintf(stderr, "Calling the real function\n");
-    errno=0;
+    errno = 0;
     if (a < 0 || b < 0)
     {
         errno = EINVAL;

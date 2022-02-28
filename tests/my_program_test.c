@@ -35,16 +35,15 @@ double __wrap_sum(double a, double b)
 static void my_program_test(void **state)
 {
     (void)state; // unused.
-    
+
     struct my_program_configuration config = {
-        .verbose =1
-    };
+        .verbose = 1};
 
     int actualResult,
         expectedResult;
 
     // WARNING: Decimals are not checked in this function.
-    expect_value(__wrap_sum, a, 1.333333); 
+    expect_value(__wrap_sum, a, 1.333333);
     // WARNING: Decimals are not checked in this function.
     expect_value(__wrap_sum, b, 1.999);
     will_return(__wrap_sum, 2.0); // Mock return value.
