@@ -12,7 +12,7 @@ dnl generated files with -DHAVE_CONFIG_H instead of the value of DEFS.
 AC_CONFIG_HEADERS([config.h])
 
 dnl Ensure that a recent enough version of Autoconf is being used.
-AC_PREREQ([2.71])
+AC_PREREQ([2.69])
 
 dnl Configure scripts will have a comment with the version of this file.
 AC_REVISION([$Revision: 0.1.1$])
