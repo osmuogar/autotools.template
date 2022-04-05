@@ -76,13 +76,15 @@ dnl Checks for libraries.
 dnl ############################################################################
 dnl This macro figures out how to build C programs using POSIX threads.
 AX_PTHREAD(, [AC_MSG_ERROR([Unable to find library libpthread])])
-dnl Chefk for math library
-AC_CHECK_LIB([m], [fabs],
-    [],[AC_MSG_ERROR([Unable to locate the math library.])])
+# Dependency for the GNU Scientific Library.
+AC_CHECK_LIB([m],[cos])
+# Dependency for the GNU Sclientific Library.
+AC_CHECK_LIB([gslcblas],[cblas_dgemm])
+dnl Chefk for GNU Scientific Library.
+AC_CHECK_LIB([gsl],[gsl_blas_dgemm])
 dnl Check for libcmocka.
 AC_CHECK_LIB([cmocka], [_run_group_tests], [],
     [AC_MSG_ERROR([Unable to find library cmocka.])])
-
 
 dnl ############################################################################
 dnl Checks for header files.

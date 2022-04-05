@@ -11,6 +11,8 @@
 #include <my_program/my_program.h>
 #include <my_program/util.h>
 
+#include <gsl/gsl_math.h>
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
@@ -36,6 +38,9 @@ int my_program(struct my_program_configuration *config)
     {
         res = EXIT_FAILURE; // Something failed.
     }
+
+    // Square the result.
+    result = gsl_pow_int(result, 2);
 
     if (config->verbose)
     {
