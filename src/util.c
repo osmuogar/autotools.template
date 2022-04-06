@@ -7,14 +7,12 @@
 */
 #include <config.h>
 
+#include <my_program/util.h>
+
 #include <errno.h>
-#include <stdio.h>
-#include <math.h>
-#include <assert.h>
 
 double sum(double a, double b)
 {
-    fprintf(stderr, "Calling the real function\n");
     errno = 0;
     if (a < 0 || b < 0)
     {

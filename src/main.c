@@ -17,14 +17,14 @@
 #define STD_OUTPUT stdout
 #define ERR_OUTPUT stderr
 
-const char *argp_my_program_version = PACKAGE_STRING;
-const char *argp_my_program_bug_address = PACKAGE_BUGREPORT;
+const char *argp_program_version = PACKAGE_STRING;
+const char *argp_program_bug_address = PACKAGE_BUGREPORT;
 static char doc[] = "my_program description.";
 static char args_doc[] = "my_program arguments.";
 static struct argp_option options[] = {
     {0, 0, 0, 0, "my_program options:", 0},
 
-    {0, 0, 0, 0, "General options:", -1},
+    {0, 0, 0, 0, "Generic options:", -1},
     {"output", 'o', "Output pipe", 0, "Default output.", -1},
     {"erroutput", 200, "Output pipe", 0, "Default output.", -1},
     {"verbose", 'v', 0, 0, "Verbose mode.", -1},
@@ -32,6 +32,7 @@ static struct argp_option options[] = {
     {"usage", 'u', 0, 0, "Prints ussage and exits.", -1},
     {"help", 'h', 0, 0, "Prints help and exits.", -1},
     {"version", 'V', 0, 0, "Prints version and exits.", -1},
+
     {0}};
 
 static error_t my_arg_parser(int key, char *arg, struct argp_state *state)
@@ -52,7 +53,7 @@ static error_t my_arg_parser(int key, char *arg, struct argp_state *state)
         arguments->verbose = 0;
         break;
     case 'V':
-        fprintf(stdout, "%s\n", argp_my_program_version);
+        fprintf(stdout, "%s\n", argp_program_version);
         exit(0);
     case 'u':
         argp_state_help(state, stderr, ARGP_HELP_USAGE);
@@ -138,8 +139,8 @@ int main(int argc, char *argv[])
     // Executes my_program.
     if (0 != (my_program(&configuration)))
     {
-        fprintf(configuration.err_output, "Error executing %s: %s.\n", PACKAGE_NAME,
-                strerror(errno));
+        fprintf(configuration.err_output, "Error executing %s: %s.\n",
+                PACKAGE_NAME, strerror(errno));
         return EXIT_FAILURE;
     }
 
