@@ -115,9 +115,6 @@ int main(int argc, char *argv[])
     struct my_program_configuration configuration; // my_program configuration.
     unsigned int i;                                // Index.
 
-    // Triggers a function before the program closes.
-    on_exit(general_clean, &configuration);
-
 // Enable/Disable my feature.
 #ifdef ENABLE_MY_FEATURE
     printf("My feature enabled.\n");
@@ -130,6 +127,9 @@ int main(int argc, char *argv[])
     configuration.std_output = STD_OUTPUT;
     configuration.err_output = ERR_OUTPUT;
 
+    // Triggers a function before the program closes.
+    on_exit(general_clean, &configuration);
+
     // Parses arguments.
     if (0 != argp_parse(&argp, argc, argv, ARGP_NO_HELP, NULL, &configuration))
     {
@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-        // Executes my_program.
+    // Executes my_program.
     if (0 != (my_program(&configuration)))
     {
         fprintf(configuration.err_output, "Error executing %s: %s.\n",
