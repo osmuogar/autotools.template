@@ -3,8 +3,6 @@
 
 #include <my_program/my_program.h>
 
-#include <stdio.h>
-
 /**
  * @brief Shared my_program configuration structure.
  */
