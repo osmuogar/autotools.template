@@ -93,16 +93,6 @@ struct argp argp = {
     .help_filter = NULL,
     .argp_domain = NULL};
 
-void general_clean(int state, void *args)
-{
-    struct my_program_configuration *config =
-        (struct my_program_configuration *)args;
-    if (NULL != config->std_output)
-        fclose(config->std_output);
-    if (NULL != config->err_output)
-        fclose(config->err_output);
-}
-
 /**
  * @brief Generates a command for my_program.
  *
@@ -126,9 +116,6 @@ int main(int argc, char *argv[])
     configuration.verbose = 0;               // Default value.
     configuration.std_output = STD_OUTPUT;
     configuration.err_output = ERR_OUTPUT;
-
-    // Triggers a function before the program closes.
-    on_exit(general_clean, &configuration);
 
     // Parses arguments.
     if (0 != argp_parse(&argp, argc, argv, ARGP_NO_HELP, NULL, &configuration))
