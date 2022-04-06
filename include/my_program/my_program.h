@@ -1,14 +1,17 @@
 #ifndef __MY_PROGRAM__
 #define __MY_PROGRAM__
 
+#include <stdio.h>
+
 /**
  * @brief my_program configuration structure.
  */
 struct my_program_configuration
 {
-    char *version;     // Configuration version.
-    int verbose;       // Marks verbose mode.
-    char *output_path; // Output path.
+    char *version;    // Configuration version.
+    int verbose;      // Marks verbose mode.
+    FILE *std_output, // Std output.
+        *err_output;  // Err output.
 };
 
 /**

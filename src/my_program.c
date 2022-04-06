@@ -23,21 +23,21 @@
  * @param config
  * @return int
  */
-int my_program(struct my_program_configuration *config)
+int my_program(struct my_program_configuration *configuration)
 {
-    extern FILE *output; // Where to log.
+    extern struct my_program_configuration *config;
 
-    int res;       // Return value.
     double result; // Function result.
 
-    res = EXIT_SUCCESS; // If all goes fine.
+    // Check configuration.
+    if (NULL == configuration)
+        return errno = EINVAL, EXIT_FAILURE;
+    config = configuration;
 
     result = sum(1.1111, 1.2222); // Compute result.
 
     if (0 != errno)
-    {
-        res = EXIT_FAILURE; // Something failed.
-    }
+        return EXIT_FAILURE; // Errno already set.
 
     // Square the result.
     result = gsl_pow_int(result, 2);
@@ -47,5 +47,5 @@ int my_program(struct my_program_configuration *config)
         fprintf(stdout, "The value is %f\n", result);
     }
 
-    return res; // Return status.
+    return EXIT_SUCCESS; // Return status.
 }

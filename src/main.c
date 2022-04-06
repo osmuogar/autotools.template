@@ -14,6 +14,9 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define STD_OUTPUT stdout
+#define ERR_OUTPUT stderr
+
 const char *argp_my_program_version = PACKAGE_STRING;
 const char *argp_my_program_bug_address = PACKAGE_BUGREPORT;
 static char doc[] = "my_program description.";
@@ -23,6 +26,7 @@ static struct argp_option options[] = {
 
     {0, 0, 0, 0, "General options:", -1},
     {"output", 'o', "Output pipe", 0, "Default output.", -1},
+    {"erroutput", 200, "Output pipe", 0, "Default output.", -1},
     {"verbose", 'v', 0, 0, "Verbose mode.", -1},
     {"quiet", 'q', 0, 0, "Quiet mode.", -1},
     {"usage", 'u', 0, 0, "Prints ussage and exits.", -1},
@@ -35,8 +39,11 @@ static error_t my_arg_parser(int key, char *arg, struct argp_state *state)
     struct my_program_configuration *arguments = state->input;
     switch (key)
     {
+    case 200:
+        arguments->err_output = fopen(arg, "w");
+        break;
     case 'o':
-        arguments->output_path = arg;
+        arguments->std_output = fopen(arg, "w");
         break;
     case 'v':
         arguments->verbose = 1;
@@ -85,6 +92,16 @@ struct argp argp = {
     .help_filter = NULL,
     .argp_domain = NULL};
 
+void general_clean(int state, void *args)
+{
+    struct my_program_configuration *config =
+        (struct my_program_configuration *)args;
+    if (NULL != config->std_output)
+        fclose(config->std_output);
+    if (NULL != config->err_output)
+        fclose(config->err_output);
+}
+
 /**
  * @brief Generates a command for my_program.
  *
@@ -94,10 +111,8 @@ struct argp argp = {
  */
 int main(int argc, char *argv[])
 {
-    struct my_program_configuration config; // my_program configuration.
-    int res = 0;                            // Execution result.
-    unsigned int i;                         // Index.
-    extern FILE *output;
+    struct my_program_configuration configuration; // my_program configuration.
+    unsigned int i;                                // Index.
 
 // Enable/Disable my feature.
 #ifdef ENABLE_MY_FEATURE
@@ -106,34 +121,27 @@ int main(int argc, char *argv[])
     printf("My feature non-enabled.\n");
 #endif
 
-    config.version = PACKAGE_VERSION; // Import version from autotools.
-    config.verbose = 0;               // Default value.
-    config.output_path = NULL;
+    configuration.version = PACKAGE_VERSION; // Import version from autotools.
+    configuration.verbose = 0;               // Default value.
+    configuration.std_output = STD_OUTPUT;
+    configuration.err_output = ERR_OUTPUT;
 
     // Parses arguments.
-    if (0 != argp_parse(&argp, argc, argv, ARGP_NO_HELP, NULL, &config))
+    if (0 != argp_parse(&argp, argc, argv, ARGP_NO_HELP, NULL, &configuration))
     {
         fprintf(stderr, "Error parsing arguments: %s.\n", strerror(errno));
     }
 
-    // Set output.
-    if (NULL != config.output_path)
-    {
-        output = fopen(config.output_path, "w");
-    }
-    else
-    {
-        output = stdout;
-    }
+    // Triggers a function before the program closes.
+    on_exit(general_clean, &configuration);
 
-    // Executes main my_program.
-    if (0 != (res = my_program(&config)))
+    // Executes my_program.
+    if (0 != (my_program(&configuration)))
     {
-        fprintf(output, "Error executing %s: %s.\n", PACKAGE_NAME,
+        fprintf(configuration.err_output, "Error executing %s: %s.\n", PACKAGE_NAME,
                 strerror(errno));
+        return EXIT_FAILURE;
     }
 
-    fclose(output);
-
-    return res;
+    return EXIT_SUCCESS;
 }

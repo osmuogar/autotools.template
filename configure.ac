@@ -15,7 +15,7 @@ dnl Ensure that a recent enough version of Autoconf is being used.
 AC_PREREQ([2.69])
 
 dnl Configure scripts will have a comment with the version of this file.
-AC_REVISION([$Revision: 0.1.1$])
+AC_REVISION([$Revision: 0.1.2$])
 
 dnl This checks if the script is running in the appropiate directory.
 AC_CONFIG_SRCDIR([src/my_program.c])
@@ -77,14 +77,17 @@ dnl ############################################################################
 dnl This macro figures out how to build C programs using POSIX threads.
 AX_PTHREAD(, [AC_MSG_ERROR([Unable to find library libpthread])])
 # Dependency for the GNU Scientific Library.
-AC_CHECK_LIB([m],[cos])
+AC_CHECK_LIB([m], [cos], [],
+    [AC_MSG_ERROR([Unable to find math library.])])
 # Dependency for the GNU Sclientific Library.
-AC_CHECK_LIB([gslcblas],[cblas_dgemm])
+AC_CHECK_LIB([gslcblas], [cblas_dgemm], [],
+    [AC_MSG_ERROR([Unable to find cblas library.])])
 dnl Chefk for GNU Scientific Library.
-AC_CHECK_LIB([gsl],[gsl_blas_dgemm])
+AC_CHECK_LIB([gsl], [gsl_blas_dgemm], [],
+    [AC_MSG_ERROR([Unable to find gsl library.])])
 dnl Check for libcmocka.
 AC_CHECK_LIB([cmocka], [_run_group_tests], [],
-    [AC_MSG_ERROR([Unable to find library cmocka.])])
+    [AC_MSG_ERROR([Unable to find cmocka library.])])
 
 dnl ############################################################################
 dnl Checks for header files.
@@ -139,8 +142,8 @@ AC_MSG_NOTICE([
     CPPFLAGS:               ${CPPFLAGS}
     LDFLAGS:                ${LDFLAGS}
     LIBS:                   ${LIBS}
-    my_program version:        ${VERSION}
-    Build my_program:          Shared=${enable_shared}, Static=${enable_static}
+    my_program version:     ${VERSION}
+    Build my_program:       Shared=${enable_shared}, Static=${enable_static}
     Built-in manual:        ${user_manual}
     Log level:              ${log_level}
     Valgrind support:       ${enable_valgrind}

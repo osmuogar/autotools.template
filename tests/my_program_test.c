@@ -4,10 +4,18 @@
 #include <setjmp.h>
 #include <cmocka.h>
 
-#include <stdio.h>
-
 #include <my_program/my_program.h>
 #include <my_program/util.h>
+
+static void basic_test(void **state)
+{
+    int actualResult,
+        expectedResult;
+
+    expectedResult = actualResult = 0;
+
+    assert_int_equal(expectedResult, actualResult);
+}
 
 /**
  * @brief Wrapper of sum function. Requires to import the wrapped function
@@ -22,9 +30,33 @@ double __wrap_sum(double a, double b)
     check_expected(a); // Checks a param is what is expected.
     check_expected(b); // Checks b param is what is expected.
 
-    fprintf(stderr, "Calling the wrap function\n");
-
     return mock_type(double); // Returns the specified double.
+}
+
+static int setup(void **state)
+{
+    struct my_program_configuration *config;
+
+    config = malloc(1 * sizeof(struct my_program_configuration));
+    if (config == NULL)
+    {
+        return -1;
+    }
+
+    config->verbose = 0;
+
+    config->err_output = NULL;
+    config->std_output = NULL;
+    config->version = NULL;
+
+    *state = config;
+
+    return 0;
+}
+static int teardown(void **state)
+{
+    free(*state);
+    return 0;
 }
 
 /**
@@ -34,10 +66,7 @@ double __wrap_sum(double a, double b)
  */
 static void my_program_test(void **state)
 {
-    (void)state; // unused.
-
-    struct my_program_configuration config = {
-        .verbose = 1};
+    struct my_program_configuration *config = *state;
 
     int actualResult,
         expectedResult;
@@ -49,7 +78,7 @@ static void my_program_test(void **state)
     will_return(__wrap_sum, 2.0); // Mock return value.
 
     expectedResult = EXIT_SUCCESS;
-    actualResult = my_program(&config);
+    actualResult = my_program(config);
 
     assert_int_equal(expectedResult, actualResult);
 }
@@ -64,6 +93,8 @@ static void my_program_test(void **state)
  */
 int main(void)
 {
-    const struct CMUnitTest tests[] = {cmocka_unit_test(my_program_test)};
+    const struct CMUnitTest tests[] = {
+        cmocka_unit_test(basic_test),
+        cmocka_unit_test_setup_teardown(my_program_test, setup, teardown)};
     return cmocka_run_group_tests(tests, NULL, NULL);
 }

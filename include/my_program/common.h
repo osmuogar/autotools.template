@@ -6,8 +6,8 @@
 #include <stdio.h>
 
 /**
- * Program output.
+ * @brief Shared my_program configuration structure.
  */
-extern FILE *output;
+extern struct my_program_configuration *config;
 
 #endif
